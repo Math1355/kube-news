@@ -23,7 +23,9 @@ spec:
             value: "kubenews"
           - name: POSTGRES_PASSWORD
             value: "pg#123"
+
 ---
+
 apiVersion: v1
 kind: Service
 metadata:
@@ -34,7 +36,9 @@ spec:
   ports:
     - port: 5432
   type: ClusterIP
+
 ---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -48,6 +52,10 @@ spec:
     metadata:
       labels:
         app: web
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/metrics"
     spec:
        containers:
         - name: web
